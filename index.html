@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>续写偏好测试（中性）</title>
 <style>
   :root { --ink:#1f2328; --muted:#6b7280; --line:#e5e7eb; --accent:#2f6fb3; --bg:#fbfaf7; }
@@ -15,6 +16,8 @@
   .player { border:1px solid var(--line); border-radius:10px; padding:10px; }
   .tag { display:inline-block; width:22px; height:22px; line-height:22px; text-align:center; border-radius:50%; background:var(--accent); color:#fff; font-size:12px; font-weight:600; }
   audio { width:100%; margin-top:6px; }
+  .player { min-width:0; }
+  .reveal-table { display:block; overflow-x:auto; }
   .ask { margin-top:12px; font-weight:600; }
   .choices { display:flex; gap:10px; margin-top:8px; }
   button { border:1px solid var(--line); background:#fff; color:var(--ink); border-radius:8px; padding:8px 18px; font-size:14px; cursor:pointer; }
@@ -35,6 +38,8 @@
 </style></head>
 <body><div class="wrap">
   <h1>续写偏好测试</h1>
+  <p class="muted">请戴耳机，依次听每题 A、B，再选更自然的一段或「听不出」。共 12 题，建议预留 8–12 分钟。
+  手机请用 Safari、Edge 或 Chrome 打开。作答只保存在当前浏览器，答完请用页底按钮把结果发回组织者；本页不会自动上传答案。</p>
   <p class="muted">听者代号（可选，会写进导出的结果里）：
   <input id="listener" placeholder="例如：同学A" style="border:1px solid var(--line);border-radius:6px;padding:4px 8px;font-size:13px;">
   <span class="muted">构建 5971fd4f23</span></p>
@@ -231,7 +236,10 @@
   </div>
   <div class="card">
     <button onclick="exportJson()">导出逐题结果 JSON</button>
+    <button onclick="shareResults()">分享结果（手机）</button>
+    <button onclick="copyResults()">复制结果</button>
     <span class="muted" id="saved"></span>
+    <textarea id="result-text" hidden readonly aria-label="结果文本，可全选复制" style="width:100%;height:180px;margin-top:12px;"></textarea>
   </div>
 </div>
 <script>
@@ -324,7 +332,7 @@ function update() {
   document.getElementById('reveal').classList.remove('hidden');
 }
 
-function exportJson() {
+function resultData() {
   const rows = Object.entries(trials).map(([key, info]) => {
     const value = answers[key] || {};
     let picked = null;
@@ -340,18 +348,64 @@ function exportJson() {
     };
   });
   const listener = (document.getElementById('listener').value || '').trim();
-  const blob = new Blob([JSON.stringify({page: PAGE, build: BUILD, listener: listener, exported_at: new Date().toISOString(), trials: rows}, null, 2)],
-                                             {type: 'application/json'});
+  return {page: PAGE, build: BUILD, listener: listener, exported_at: new Date().toISOString(), trials: rows};
+}
+
+function resultFilename(data) {
+  return 'ab_results' + (data.listener ? '_' + data.listener.replace(/[<>:"/\\|?*\u0000-\u001f]/g, '_') : '') + '.json';
+}
+
+function exportJson() {
+  const data = resultData();
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.href = url;
-  link.download = 'ab_results' + (listener ? '_' + listener : '') + '.json';
+  link.download = resultFilename(data);
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
-  URL.revokeObjectURL(url);
-  document.getElementById('saved').textContent = '已导出 ab_results.json';
+  setTimeout(() => URL.revokeObjectURL(url), 30000);
+  document.getElementById('saved').textContent = '已导出，请把文件发回组织者。';
 }
 
+async function copyResults() {
+  const text = JSON.stringify(resultData(), null, 2);
+  try {
+    await navigator.clipboard.writeText(text);
+    document.getElementById('saved').textContent = '已复制，请粘贴发回组织者。';
+  } catch (error) {
+    const area = document.getElementById('result-text');
+    area.hidden = false;
+    area.value = text;
+    area.focus();
+    area.select();
+    document.getElementById('saved').textContent = '请长按下方文本全选复制，再发回组织者。';
+  }
+}
+
+async function shareResults() {
+  const data = resultData();
+  const file = new File([JSON.stringify(data, null, 2)], resultFilename(data), {type:'application/json'});
+  try {
+    if (navigator.canShare && navigator.canShare({files:[file]})) {
+      await navigator.share({files:[file], title:'音乐试听结果'});
+    } else if (navigator.share) {
+      await navigator.share({title:'音乐试听结果', text:JSON.stringify(data, null, 2)});
+    } else {
+      await copyResults();
+      return;
+    }
+    document.getElementById('saved').textContent = '已调用分享面板；请确认已发送给组织者。';
+  } catch (error) {
+    if (error.name !== 'AbortError') await copyResults();
+  }
+}
+
+document.querySelectorAll('audio').forEach(player => {
+  player.addEventListener('play', () => {
+    document.querySelectorAll('audio').forEach(other => { if (other !== player) other.pause(); });
+  });
+});
 load();
 </script></body></html>
