@@ -1,0 +1,402 @@
+{
+  "sections": [
+    {
+      "key": "s1",
+      "title": "自由续写 vs 节奏骨架",
+      "left_label": "自由续写",
+      "right_label": "节奏骨架",
+      "hypothesis": null,
+      "checkpoint_left": "2d8e2c9a0904",
+      "checkpoint_right": "2d8e2c9a0904",
+      "sampling": {
+        "temperature": 1.0,
+        "top_k": 40,
+        "top_p": 0.95,
+        "repetition_penalty": 1.05,
+        "repetition_window": 64,
+        "constrained": true
+      },
+      "code_hash": "b1b4cff04391",
+      "cards": [
+        {
+          "index": 1,
+          "name": "0fithos",
+          "a": "s1_1_L.wav",
+          "b": "s1_1_R.wav",
+          "a_side": "left",
+          "b_side": "right",
+          "a_label": "自由续写",
+          "b_label": "节奏骨架",
+          "a_metrics": {
+            "复调": 3.47,
+            "每小节音数": 17.3,
+            "不协和占比": 0.031,
+            "调内音比例": 0.919
+          },
+          "b_metrics": {
+            "复调": 2.73,
+            "每小节音数": 7.5,
+            "不协和占比": 0.011,
+            "调内音比例": 0.916
+          },
+          "seam_seconds": 8.0,
+          "prefix_seconds": 8.0,
+          "window_seconds": 12.0,
+          "clip_seconds": 20.0,
+          "gain": 0.6025,
+          "prompt_bars": 8
+        },
+        {
+          "index": 2,
+          "name": "Eternal_Harvest",
+          "a": "s1_2_L.wav",
+          "b": "s1_2_R.wav",
+          "a_side": "left",
+          "b_side": "right",
+          "a_label": "自由续写",
+          "b_label": "节奏骨架",
+          "a_metrics": {
+            "复调": 2.36,
+            "每小节音数": 19.8,
+            "不协和占比": 0.016,
+            "调内音比例": 0.865
+          },
+          "b_metrics": {
+            "复调": 2.0,
+            "每小节音数": 18.7,
+            "不协和占比": 0.012,
+            "调内音比例": 0.899
+          },
+          "seam_seconds": 7.5,
+          "prefix_seconds": 7.5,
+          "window_seconds": 12.0,
+          "clip_seconds": 19.5,
+          "gain": 0.4993,
+          "prompt_bars": 5
+        },
+        {
+          "index": 3,
+          "name": "FF3_Third_Phase_Final_(Piano)",
+          "a": "s1_3_L.wav",
+          "b": "s1_3_R.wav",
+          "a_side": "left",
+          "b_side": "right",
+          "a_label": "自由续写",
+          "b_label": "节奏骨架",
+          "a_metrics": {
+            "复调": 1.3,
+            "每小节音数": 9.3,
+            "不协和占比": 0.0,
+            "调内音比例": 0.834
+          },
+          "b_metrics": {
+            "复调": 1.52,
+            "每小节音数": 15.0,
+            "不协和占比": 0.02,
+            "调内音比例": 0.931
+          },
+          "seam_seconds": 8.0,
+          "prefix_seconds": 8.0,
+          "window_seconds": 11.613,
+          "clip_seconds": 19.613,
+          "gain": 0.5254,
+          "prompt_bars": 5
+        },
+        {
+          "index": 4,
+          "name": "ff4-fight1",
+          "a": "s1_4_R.wav",
+          "b": "s1_4_L.wav",
+          "a_side": "right",
+          "b_side": "left",
+          "a_label": "节奏骨架",
+          "b_label": "自由续写",
+          "a_metrics": {
+            "复调": 1.94,
+            "每小节音数": 15.6,
+            "不协和占比": 0.036,
+            "调内音比例": 0.987
+          },
+          "b_metrics": {
+            "复调": 1.86,
+            "每小节音数": 17.8,
+            "不协和占比": 0.033,
+            "调内音比例": 0.834
+          },
+          "seam_seconds": 7.059,
+          "prefix_seconds": 7.059,
+          "window_seconds": 11.294,
+          "clip_seconds": 18.353,
+          "gain": 0.5348,
+          "prompt_bars": 5
+        },
+        {
+          "index": 5,
+          "name": "ff4_piano_collections-main_theme",
+          "a": "s1_5_R.wav",
+          "b": "s1_5_L.wav",
+          "a_side": "right",
+          "b_side": "left",
+          "a_label": "节奏骨架",
+          "b_label": "自由续写",
+          "a_metrics": {
+            "复调": 1.0,
+            "每小节音数": 7.0,
+            "不协和占比": 0.0,
+            "调内音比例": 0.804
+          },
+          "b_metrics": {
+            "复调": 1.02,
+            "每小节音数": 6.6,
+            "不协和占比": 0.0,
+            "调内音比例": 0.73
+          },
+          "seam_seconds": 8.0,
+          "prefix_seconds": 8.0,
+          "window_seconds": 10.839,
+          "clip_seconds": 18.839,
+          "gain": 0.2941,
+          "prompt_bars": 6
+        },
+        {
+          "index": 6,
+          "name": "ff8-lfp",
+          "a": "s1_6_R.wav",
+          "b": "s1_6_L.wav",
+          "a_side": "right",
+          "b_side": "left",
+          "a_label": "节奏骨架",
+          "b_label": "自由续写",
+          "a_metrics": {
+            "复调": 1.0,
+            "每小节音数": 1.0,
+            "不协和占比": 0.0,
+            "调内音比例": 0.913
+          },
+          "b_metrics": {
+            "复调": 1.4,
+            "每小节音数": 9.6,
+            "不协和占比": 0.154,
+            "调内音比例": 0.973
+          },
+          "seam_seconds": 8.0,
+          "prefix_seconds": 8.0,
+          "window_seconds": 11.2,
+          "clip_seconds": 19.2,
+          "gain": 0.239,
+          "prompt_bars": 5
+        }
+      ]
+    },
+    {
+      "key": "s2",
+      "title": "从零+骨架 vs 预训练+骨架",
+      "left_label": "从零+骨架",
+      "right_label": "预训练+骨架",
+      "hypothesis": null,
+      "checkpoint_left": "bc44e4b5d87c",
+      "checkpoint_right": "2d8e2c9a0904",
+      "sampling": {
+        "temperature": 1.0,
+        "top_k": 40,
+        "top_p": 0.95,
+        "repetition_penalty": 1.05,
+        "repetition_window": 64,
+        "constrained": true
+      },
+      "code_hash": "b1b4cff04391",
+      "cards": [
+        {
+          "index": 1,
+          "name": "0fithos",
+          "a": "s2_1_R.wav",
+          "b": "s2_1_L.wav",
+          "a_side": "right",
+          "b_side": "left",
+          "a_label": "预训练+骨架",
+          "b_label": "从零+骨架",
+          "a_metrics": {
+            "复调": 2.73,
+            "每小节音数": 7.5,
+            "不协和占比": 0.011,
+            "调内音比例": 0.916
+          },
+          "b_metrics": {
+            "复调": 2.73,
+            "每小节音数": 7.5,
+            "不协和占比": 0.065,
+            "调内音比例": 0.836
+          },
+          "seam_seconds": 8.0,
+          "prefix_seconds": 8.0,
+          "window_seconds": 12.0,
+          "clip_seconds": 20.0,
+          "gain": 0.5229,
+          "prompt_bars": 8
+        },
+        {
+          "index": 2,
+          "name": "Eternal_Harvest",
+          "a": "s2_2_L.wav",
+          "b": "s2_2_R.wav",
+          "a_side": "left",
+          "b_side": "right",
+          "a_label": "从零+骨架",
+          "b_label": "预训练+骨架",
+          "a_metrics": {
+            "复调": 2.0,
+            "每小节音数": 18.7,
+            "不协和占比": 0.024,
+            "调内音比例": 0.875
+          },
+          "b_metrics": {
+            "复调": 2.0,
+            "每小节音数": 18.7,
+            "不协和占比": 0.012,
+            "调内音比例": 0.899
+          },
+          "seam_seconds": 7.5,
+          "prefix_seconds": 7.5,
+          "window_seconds": 12.0,
+          "clip_seconds": 19.5,
+          "gain": 0.377,
+          "prompt_bars": 5
+        },
+        {
+          "index": 3,
+          "name": "FF3_Third_Phase_Final_(Piano)",
+          "a": "s2_3_L.wav",
+          "b": "s2_3_R.wav",
+          "a_side": "left",
+          "b_side": "right",
+          "a_label": "从零+骨架",
+          "b_label": "预训练+骨架",
+          "a_metrics": {
+            "复调": 1.52,
+            "每小节音数": 15.0,
+            "不协和占比": 0.118,
+            "调内音比例": 0.698
+          },
+          "b_metrics": {
+            "复调": 1.52,
+            "每小节音数": 15.0,
+            "不协和占比": 0.02,
+            "调内音比例": 0.931
+          },
+          "seam_seconds": 8.0,
+          "prefix_seconds": 8.0,
+          "window_seconds": 11.613,
+          "clip_seconds": 19.613,
+          "gain": 0.5254,
+          "prompt_bars": 5
+        },
+        {
+          "index": 4,
+          "name": "ff4-fight1",
+          "a": "s2_4_R.wav",
+          "b": "s2_4_L.wav",
+          "a_side": "right",
+          "b_side": "left",
+          "a_label": "预训练+骨架",
+          "b_label": "从零+骨架",
+          "a_metrics": {
+            "复调": 1.94,
+            "每小节音数": 15.6,
+            "不协和占比": 0.036,
+            "调内音比例": 0.987
+          },
+          "b_metrics": {
+            "复调": 1.94,
+            "每小节音数": 15.6,
+            "不协和占比": 0.134,
+            "调内音比例": 0.854
+          },
+          "seam_seconds": 7.059,
+          "prefix_seconds": 7.059,
+          "window_seconds": 11.294,
+          "clip_seconds": 18.353,
+          "gain": 0.5005,
+          "prompt_bars": 5
+        },
+        {
+          "index": 5,
+          "name": "ff4_piano_collections-main_theme",
+          "a": "s2_5_R.wav",
+          "b": "s2_5_L.wav",
+          "a_side": "right",
+          "b_side": "left",
+          "a_label": "预训练+骨架",
+          "b_label": "从零+骨架",
+          "a_metrics": {
+            "复调": 1.0,
+            "每小节音数": 7.0,
+            "不协和占比": 0.0,
+            "调内音比例": 0.804
+          },
+          "b_metrics": {
+            "复调": 1.0,
+            "每小节音数": 7.0,
+            "不协和占比": 0.0,
+            "调内音比例": 0.893
+          },
+          "seam_seconds": 8.0,
+          "prefix_seconds": 8.0,
+          "window_seconds": 10.839,
+          "clip_seconds": 18.839,
+          "gain": 0.1998,
+          "prompt_bars": 6
+        },
+        {
+          "index": 6,
+          "name": "ff8-lfp",
+          "a": "s2_6_L.wav",
+          "b": "s2_6_R.wav",
+          "a_side": "left",
+          "b_side": "right",
+          "a_label": "从零+骨架",
+          "b_label": "预训练+骨架",
+          "a_metrics": {
+            "复调": 1.0,
+            "每小节音数": 1.0,
+            "不协和占比": 0.0,
+            "调内音比例": 0.935
+          },
+          "b_metrics": {
+            "复调": 1.0,
+            "每小节音数": 1.0,
+            "不协和占比": 0.0,
+            "调内音比例": 0.913
+          },
+          "seam_seconds": 8.0,
+          "prefix_seconds": 8.0,
+          "window_seconds": 11.2,
+          "clip_seconds": 19.2,
+          "gain": 0.0955,
+          "prompt_bars": 5
+        }
+      ]
+    }
+  ],
+  "provenance": {
+    "自由续写": {
+      "dir": "reports\\groups\\ft\\free",
+      "checkpoint": "runs/ft_maestro/checkpoints/best.pt",
+      "checkpoint_sha256_12": "2d8e2c9a0904"
+    },
+    "节奏骨架": {
+      "dir": "reports\\groups\\ft\\skeleton",
+      "checkpoint": "runs/ft_maestro/checkpoints/best.pt",
+      "checkpoint_sha256_12": "2d8e2c9a0904"
+    },
+    "从零+骨架": {
+      "dir": "reports\\groups\\scratch\\skeleton",
+      "checkpoint": "runs/scratch_92/checkpoints/best.pt",
+      "checkpoint_sha256_12": "bc44e4b5d87c"
+    },
+    "预训练+骨架": {
+      "dir": "reports\\groups\\ft\\skeleton",
+      "checkpoint": "runs/ft_maestro/checkpoints/best.pt",
+      "checkpoint_sha256_12": "2d8e2c9a0904"
+    }
+  }
+}

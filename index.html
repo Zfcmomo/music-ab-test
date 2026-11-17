@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<title>续写偏好测试（中性）</title>
+<style>
+  :root { --ink:#1f2328; --muted:#6b7280; --line:#e5e7eb; --accent:#2f6fb3; --bg:#fbfaf7; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif; line-height:1.6; }
+  .wrap { max-width:900px; margin:0 auto; padding:32px 20px 80px; }
+  h1 { font-size:25px; margin-bottom:4px; }
+  h2 { font-size:18px; margin-top:38px; border-bottom:1px solid var(--line); padding-bottom:6px; }
+  .muted { color:var(--muted); font-size:13px; }
+  .trial { background:#fff; border:1px solid var(--line); border-radius:12px; padding:16px 18px; margin-top:16px; }
+  .trial-head { font-weight:600; }
+  .players { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:8px; }
+  .player { border:1px solid var(--line); border-radius:10px; padding:10px; }
+  .tag { display:inline-block; width:22px; height:22px; line-height:22px; text-align:center; border-radius:50%; background:var(--accent); color:#fff; font-size:12px; font-weight:600; }
+  audio { width:100%; margin-top:6px; }
+  .ask { margin-top:12px; font-weight:600; }
+  .choices { display:flex; gap:10px; margin-top:8px; }
+  button { border:1px solid var(--line); background:#fff; color:var(--ink); border-radius:8px; padding:8px 18px; font-size:14px; cursor:pointer; }
+  button.picked { border-color:var(--ink); background:#eef1f5; font-weight:600; }
+  button:disabled { opacity:.45; cursor:default; }
+  .hidden { display:none; }
+  .card { background:#fff; border:1px solid var(--line); border-radius:12px; padding:16px 18px; margin-top:16px; }
+  .score { font-size:19px; font-weight:700; }
+  .reveal-table td, .reveal-table th { padding:4px 10px; border-bottom:1px solid var(--line); font-size:13px; }
+  .note { background:#fff; border:1px solid var(--line); border-radius:12px; padding:14px 18px; margin-top:16px; font-size:13px; }
+  @media (max-width: 640px) {
+    .wrap { padding:16px 12px 60px; }
+    h1 { font-size:21px; }
+    h2 { font-size:16px; }
+    .players { grid-template-columns:1fr; }
+    .choices { flex-wrap:wrap; }
+  }
+</style></head>
+<body><div class="wrap">
+  <h1>续写偏好测试</h1>
+  <p class="muted">听者代号（可选，会写进导出的结果里）：
+  <input id="listener" placeholder="例如：同学A" style="border:1px solid var(--line);border-radius:6px;padding:4px 8px;font-size:13px;">
+  <span class="muted">构建 5971fd4f23</span></p>
+  <p class="muted">每组两段音频共享<b>同一段真人前奏</b>，只有续写不同；接缝位置、总时长完全一致。
+  这一轮<b>没有正确答案</b>，选中只表示偏好，全部答完才揭晓方法名。</p>
+
+  <h2>自由续写 vs 节奏骨架</h2>
+  <p class="muted">共 6 组。每段 = 最多 8 秒前奏（按整小节边界截取，6.9–8.0 秒不等）
+  + 整数个小节的续写（10.3–12.0 秒）。接缝处不插静音；两侧长度、响度增益完全相同。</p>
+  
+    <section class="trial" data-key="s11" data-section="s1">
+      <div class="trial-head">S11 <span class="muted">（0fithos · 前奏 8.0s + 续写 12.0s）</span></div>
+      <div class="players">
+        <div class="player"><span class="tag">A</span><audio controls preload="none" src="clips/s1_1_L.wav"></audio></div>
+        <div class="player"><span class="tag">B</span><audio controls preload="none" src="clips/s1_1_R.wav"></audio></div>
+      </div>
+      <div class="ask">哪一段接前奏更自然？</div>
+      <div class="choices">
+        <button onclick="answer('s11', 'a', this)">A</button>
+        <button onclick="answer('s11', 'b', this)">B</button>
+        <button class="ghost" onclick="answer('s11', '?', this)">听不出</button>
+      </div>
+      <div class="status muted"></div>
+    </section>
+    <section class="trial" data-key="s12" data-section="s1">
+      <div class="trial-head">S12 <span class="muted">（Eternal_Harvest · 前奏 7.5s + 续写 12.0s）</span></div>
+      <div class="players">
+        <div class="player"><span class="tag">A</span><audio controls preload="none" src="clips/s1_2_L.wav"></audio></div>
+        <div class="player"><span class="tag">B</span><audio controls preload="none" src="clips/s1_2_R.wav"></audio></div>
+      </div>
+      <div class="ask">哪一段接前奏更自然？</div>
+      <div class="choices">
+        <button onclick="answer('s12', 'a', this)">A</button>
+        <button onclick="answer('s12', 'b', this)">B</button>
+        <button class="ghost" onclick="answer('s12', '?', this)">听不出</button>
+      </div>
+      <div class="status muted"></div>
+    </section>
+    <section class="trial" data-key="s13" data-section="s1">
+      <div class="trial-head">S13 <span class="muted">（FF3_Third_Phase_Final_(Piano) · 前奏 8.0s + 续写 11.613s）</span></div>
+      <div class="players">
+        <div class="player"><span class="tag">A</span><audio controls preload="none" src="clips/s1_3_L.wav"></audio></div>
+        <div class="player"><span class="tag">B</span><audio controls preload="none" src="clips/s1_3_R.wav"></audio></div>
+      </div>
+      <div class="ask">哪一段接前奏更自然？</div>
+      <div class="choices">
+        <button onclick="answer('s13', 'a', this)">A</button>
+        <button onclick="answer('s13', 'b', this)">B</button>
+        <button class="ghost" onclick="answer('s13', '?', this)">听不出</button>
+      </div>
+      <div class="status muted"></div>
+    </section>
+    <section class="trial" data-key="s14" data-section="s1">
+      <div class="trial-head">S14 <span class="muted">（ff4-fight1 · 前奏 7.059s + 续写 11.294s）</span></div>
+      <div class="players">
+        <div class="player"><span class="tag">A</span><audio controls preload="none" src="clips/s1_4_R.wav"></audio></div>
+        <div class="player"><span class="tag">B</span><audio controls preload="none" src="clips/s1_4_L.wav"></audio></div>
+      </div>
+      <div class="ask">哪一段接前奏更自然？</div>
+      <div class="choices">
+        <button onclick="answer('s14', 'a', this)">A</button>
+        <button onclick="answer('s14', 'b', this)">B</button>
+        <button class="ghost" onclick="answer('s14', '?', this)">听不出</button>
+      </div>
+      <div class="status muted"></div>
+    </section>
+    <section class="trial" data-key="s15" data-section="s1">
+      <div class="trial-head">S15 <span class="muted">（ff4_piano_collections-main_theme · 前奏 8.0s + 续写 10.839s）</span></div>
+      <div class="players">
+        <div class="player"><span class="tag">A</span><audio controls preload="none" src="clips/s1_5_R.wav"></audio></div>
+        <div class="player"><span class="tag">B</span><audio controls preload="none" src="clips/s1_5_L.wav"></audio></div>
+      </div>
+      <div class="ask">哪一段接前奏更自然？</div>
+      <div class="choices">
+        <button onclick="answer('s15', 'a', this)">A</button>
+        <button onclick="answer('s15', 'b', this)">B</button>
+        <button class="ghost" onclick="answer('s15', '?', this)">听不出</button>
+      </div>
+      <div class="status muted"></div>
+    </section>
+    <section class="trial" data-key="s16" data-section="s1">
+      <div class="trial-head">S16 <span class="muted">（ff8-lfp · 前奏 8.0s + 续写 11.2s）</span></div>
+      <div class="players">
+        <div class="player"><span class="tag">A</span><audio controls preload="none" src="clips/s1_6_R.wav"></audio></div>
+        <div class="player"><span class="tag">B</span><audio controls preload="none" src="clips/s1_6_L.wav"></audio></div>
+      </div>
+      <div class="ask">哪一段接前奏更自然？</div>
+      <div class="choices">
+        <button onclick="answer('s16', 'a', this)">A</button>
+        <button onclick="answer('s16', 'b', this)">B</button>
+        <button class="ghost" onclick="answer('s16', '?', this)">听不出</button>
+      </div>
+      <div class="status muted"></div>
+    </section><h2>从零+骨架 vs 预训练+骨架</h2>
+  <p class="muted">共 6 组。每段 = 最多 8 秒前奏（按整小节边界截取，6.9–8.0 秒不等）
+  + 整数个小节的续写（10.3–12.0 秒）。接缝处不插静音；两侧长度、响度增益完全相同。</p>
+  
+    <section class="trial" data-key="s21" data-section="s2">
+      <div class="trial-head">S21 <span class="muted">（0fithos · 前奏 8.0s + 续写 12.0s）</span></div>
+      <div class="players">
+        <div class="player"><span class="tag">A</span><audio controls preload="none" src="clips/s2_1_R.wav"></audio></div>
+        <div class="player"><span class="tag">B</span><audio controls preload="none" src="clips/s2_1_L.wav"></audio></div>
+      </div>
+      <div class="ask">哪一段接前奏更自然？</div>
+      <div class="choices">
+        <button onclick="answer('s21', 'a', this)">A</button>
+        <button onclick="answer('s21', 'b', this)">B</button>
+        <button class="ghost" onclick="answer('s21', '?', this)">听不出</button>
+      </div>
+      <div class="status muted"></div>
+    </section>
+    <section class="trial" data-key="s22" data-section="s2">
+      <div class="trial-head">S22 <span class="muted">（Eternal_Harvest · 前奏 7.5s + 续写 12.0s）</span></div>
+      <div class="players">
+        <div class="player"><span class="tag">A</span><audio controls preload="none" src="clips/s2_2_L.wav"></audio></div>
+        <div class="player"><span class="tag">B</span><audio controls preload="none" src="clips/s2_2_R.wav"></audio></div>
+      </div>
+      <div class="ask">哪一段接前奏更自然？</div>
+      <div class="choices">
+        <button onclick="answer('s22', 'a', this)">A</button>
+        <button onclick="answer('s22', 'b', this)">B</button>
+        <button class="ghost" onclick="answer('s22', '?', this)">听不出</button>
+      </div>
+      <div class="status muted"></div>
+    </section>
+    <section class="trial" data-key="s23" data-section="s2">
+      <div class="trial-head">S23 <span class="muted">（FF3_Third_Phase_Final_(Piano) · 前奏 8.0s + 续写 11.613s）</span></div>
+      <div class="players">
+        <div class="player"><span class="tag">A</span><audio controls preload="none" src="clips/s2_3_L.wav"></audio></div>
+        <div class="player"><span class="tag">B</span><audio controls preload="none" src="clips/s2_3_R.wav"></audio></div>
+      </div>
+      <div class="ask">哪一段接前奏更自然？</div>
+      <div class="choices">
+        <button onclick="answer('s23', 'a', this)">A</button>
+        <button onclick="answer('s23', 'b', this)">B</button>
+        <button class="ghost" onclick="answer('s23', '?', this)">听不出</button>
+      </div>
+      <div class="status muted"></div>
+    </section>
+    <section class="trial" data-key="s24" data-section="s2">
+      <div class="trial-head">S24 <span class="muted">（ff4-fight1 · 前奏 7.059s + 续写 11.294s）</span></div>
+      <div class="players">
+        <div class="player"><span class="tag">A</span><audio controls preload="none" src="clips/s2_4_R.wav"></audio></div>
+        <div class="player"><span class="tag">B</span><audio controls preload="none" src="clips/s2_4_L.wav"></audio></div>
+      </div>
+      <div class="ask">哪一段接前奏更自然？</div>
+      <div class="choices">
+        <button onclick="answer('s24', 'a', this)">A</button>
+        <button onclick="answer('s24', 'b', this)">B</button>
+        <button class="ghost" onclick="answer('s24', '?', this)">听不出</button>
+      </div>
+      <div class="status muted"></div>
+    </section>
+    <section class="trial" data-key="s25" data-section="s2">
+      <div class="trial-head">S25 <span class="muted">（ff4_piano_collections-main_theme · 前奏 8.0s + 续写 10.839s）</span></div>
+      <div class="players">
+        <div class="player"><span class="tag">A</span><audio controls preload="none" src="clips/s2_5_R.wav"></audio></div>
+        <div class="player"><span class="tag">B</span><audio controls preload="none" src="clips/s2_5_L.wav"></audio></div>
+      </div>
+      <div class="ask">哪一段接前奏更自然？</div>
+      <div class="choices">
+        <button onclick="answer('s25', 'a', this)">A</button>
+        <button onclick="answer('s25', 'b', this)">B</button>
+        <button class="ghost" onclick="answer('s25', '?', this)">听不出</button>
+      </div>
+      <div class="status muted"></div>
+    </section>
+    <section class="trial" data-key="s26" data-section="s2">
+      <div class="trial-head">S26 <span class="muted">（ff8-lfp · 前奏 8.0s + 续写 11.2s）</span></div>
+      <div class="players">
+        <div class="player"><span class="tag">A</span><audio controls preload="none" src="clips/s2_6_L.wav"></audio></div>
+        <div class="player"><span class="tag">B</span><audio controls preload="none" src="clips/s2_6_R.wav"></audio></div>
+      </div>
+      <div class="ask">哪一段接前奏更自然？</div>
+      <div class="choices">
+        <button onclick="answer('s26', 'a', this)">A</button>
+        <button onclick="answer('s26', 'b', this)">B</button>
+        <button class="ghost" onclick="answer('s26', '?', this)">听不出</button>
+      </div>
+      <div class="status muted"></div>
+    </section>
+
+  <h2>结果</h2>
+  <div class="card"><div id="summary" class="muted">答完上面全部题目后显示。</div></div>
+  <div id="reveal" class="hidden">
+    <h2>揭晓</h2>
+    <div class="card"><table class="reveal-table" id="reveal-table"></table></div>
+    <div class="note">
+      <b>可核对信息</b><br>
+      采样参数：temperature=1.0 · top_k=40 · top_p=0.95 · repetition_penalty=1.05 · repetition_window=64 · constrained=True<br>
+      代码哈希：b1b4cff04391<br>
+      每组两个侧面的 checkpoint 哈希与来源见 <code>trials.json</code>。
+    </div>
+  </div>
+  <div class="card">
+    <button onclick="exportJson()">导出逐题结果 JSON</button>
+    <span class="muted" id="saved"></span>
+  </div>
+</div>
+<script>
+const PAGE = "ab_neutral";
+const BUILD = "5971fd4f23";
+const answers = {};
+const total = document.querySelectorAll('.trial').length;
+const trials = {"s11": {"section": "自由续写 vs 节奏骨架", "name": "0fithos", "a_label": "自由续写", "b_label": "节奏骨架", "a_metrics": {"复调": 3.47, "每小节音数": 17.3, "不协和占比": 0.031, "调内音比例": 0.919}, "b_metrics": {"复调": 2.73, "每小节音数": 7.5, "不协和占比": 0.011, "调内音比例": 0.916}, "a_side": "left", "b_side": "right"}, "s12": {"section": "自由续写 vs 节奏骨架", "name": "Eternal_Harvest", "a_label": "自由续写", "b_label": "节奏骨架", "a_metrics": {"复调": 2.36, "每小节音数": 19.8, "不协和占比": 0.016, "调内音比例": 0.865}, "b_metrics": {"复调": 2.0, "每小节音数": 18.7, "不协和占比": 0.012, "调内音比例": 0.899}, "a_side": "left", "b_side": "right"}, "s13": {"section": "自由续写 vs 节奏骨架", "name": "FF3_Third_Phase_Final_(Piano)", "a_label": "自由续写", "b_label": "节奏骨架", "a_metrics": {"复调": 1.3, "每小节音数": 9.3, "不协和占比": 0.0, "调内音比例": 0.834}, "b_metrics": {"复调": 1.52, "每小节音数": 15.0, "不协和占比": 0.02, "调内音比例": 0.931}, "a_side": "left", "b_side": "right"}, "s14": {"section": "自由续写 vs 节奏骨架", "name": "ff4-fight1", "a_label": "节奏骨架", "b_label": "自由续写", "a_metrics": {"复调": 1.94, "每小节音数": 15.6, "不协和占比": 0.036, "调内音比例": 0.987}, "b_metrics": {"复调": 1.86, "每小节音数": 17.8, "不协和占比": 0.033, "调内音比例": 0.834}, "a_side": "right", "b_side": "left"}, "s15": {"section": "自由续写 vs 节奏骨架", "name": "ff4_piano_collections-main_theme", "a_label": "节奏骨架", "b_label": "自由续写", "a_metrics": {"复调": 1.0, "每小节音数": 7.0, "不协和占比": 0.0, "调内音比例": 0.804}, "b_metrics": {"复调": 1.02, "每小节音数": 6.6, "不协和占比": 0.0, "调内音比例": 0.73}, "a_side": "right", "b_side": "left"}, "s16": {"section": "自由续写 vs 节奏骨架", "name": "ff8-lfp", "a_label": "节奏骨架", "b_label": "自由续写", "a_metrics": {"复调": 1.0, "每小节音数": 1.0, "不协和占比": 0.0, "调内音比例": 0.913}, "b_metrics": {"复调": 1.4, "每小节音数": 9.6, "不协和占比": 0.154, "调内音比例": 0.973}, "a_side": "right", "b_side": "left"}, "s21": {"section": "从零+骨架 vs 预训练+骨架", "name": "0fithos", "a_label": "预训练+骨架", "b_label": "从零+骨架", "a_metrics": {"复调": 2.73, "每小节音数": 7.5, "不协和占比": 0.011, "调内音比例": 0.916}, "b_metrics": {"复调": 2.73, "每小节音数": 7.5, "不协和占比": 0.065, "调内音比例": 0.836}, "a_side": "right", "b_side": "left"}, "s22": {"section": "从零+骨架 vs 预训练+骨架", "name": "Eternal_Harvest", "a_label": "从零+骨架", "b_label": "预训练+骨架", "a_metrics": {"复调": 2.0, "每小节音数": 18.7, "不协和占比": 0.024, "调内音比例": 0.875}, "b_metrics": {"复调": 2.0, "每小节音数": 18.7, "不协和占比": 0.012, "调内音比例": 0.899}, "a_side": "left", "b_side": "right"}, "s23": {"section": "从零+骨架 vs 预训练+骨架", "name": "FF3_Third_Phase_Final_(Piano)", "a_label": "从零+骨架", "b_label": "预训练+骨架", "a_metrics": {"复调": 1.52, "每小节音数": 15.0, "不协和占比": 0.118, "调内音比例": 0.698}, "b_metrics": {"复调": 1.52, "每小节音数": 15.0, "不协和占比": 0.02, "调内音比例": 0.931}, "a_side": "left", "b_side": "right"}, "s24": {"section": "从零+骨架 vs 预训练+骨架", "name": "ff4-fight1", "a_label": "预训练+骨架", "b_label": "从零+骨架", "a_metrics": {"复调": 1.94, "每小节音数": 15.6, "不协和占比": 0.036, "调内音比例": 0.987}, "b_metrics": {"复调": 1.94, "每小节音数": 15.6, "不协和占比": 0.134, "调内音比例": 0.854}, "a_side": "right", "b_side": "left"}, "s25": {"section": "从零+骨架 vs 预训练+骨架", "name": "ff4_piano_collections-main_theme", "a_label": "预训练+骨架", "b_label": "从零+骨架", "a_metrics": {"复调": 1.0, "每小节音数": 7.0, "不协和占比": 0.0, "调内音比例": 0.804}, "b_metrics": {"复调": 1.0, "每小节音数": 7.0, "不协和占比": 0.0, "调内音比例": 0.893}, "a_side": "right", "b_side": "left"}, "s26": {"section": "从零+骨架 vs 预训练+骨架", "name": "ff8-lfp", "a_label": "从零+骨架", "b_label": "预训练+骨架", "a_metrics": {"复调": 1.0, "每小节音数": 1.0, "不协和占比": 0.0, "调内音比例": 0.935}, "b_metrics": {"复调": 1.0, "每小节音数": 1.0, "不协和占比": 0.0, "调内音比例": 0.913}, "a_side": "left", "b_side": "right"}};
+
+function load() {
+  try {
+    const raw = localStorage.getItem(PAGE + ':' + BUILD + ':' + location.pathname);
+    if (!raw) return;
+    const saved = JSON.parse(raw);
+    for (const [key, value] of Object.entries(saved)) {
+      answers[key] = value;
+      const section = document.querySelector(`.trial[data-key="${key}"]`);
+      if (!section) continue;
+      section.querySelectorAll('.choices button').forEach(b => {
+        b.disabled = true;
+        if (b.textContent === value.choice_label) b.classList.add('picked');
+      });
+      setStatus(section, value.choice_label);
+    }
+    update();
+  } catch (e) {}
+}
+
+function setStatus(section, label) {
+  const el = section.querySelector('.status');
+  el.textContent = label === '?' ? '已记录：听不出' : ('已记录：选 ' + label);
+}
+
+function answer(key, choice, btn) {
+  const section = document.querySelector(`.trial[data-key="${key}"]`);
+  section.querySelectorAll('.choices button').forEach(b => { b.disabled = true; b.classList.remove('picked'); });
+  btn.classList.add('picked');
+  answers[key] = { choice: choice, choice_label: choice === '?' ? '?' : choice.toUpperCase(), at: new Date().toISOString() };
+  setStatus(section, answers[key].choice_label);
+  persist();
+  update();
+}
+
+function persist() {
+  try { localStorage.setItem(PAGE + ':' + BUILD + ':' + location.pathname, JSON.stringify(answers)); } catch (e) {}
+}
+
+function tally(sectionKeys) {
+  let a = 0, b = 0, tie = 0;
+  for (const key of sectionKeys) {
+    const value = answers[key];
+    if (!value) continue;
+    if (value.choice === '?') tie++; else if (value.choice === 'a') a++; else b++;
+  }
+  return { a, b, tie, n: a + b + tie };
+}
+
+function update() {
+  const el = document.getElementById('summary');
+  const done = Object.keys(answers).length;
+  if (done < total) {
+    el.innerHTML = `已完成 ${done} / ${total} 组。`;
+    document.getElementById('reveal').classList.add('hidden');
+    return;
+  }
+  const order = [...document.querySelectorAll('.trial')].map(t => t.dataset.key);
+  const bySection = {};
+  const sectionOf = {};
+  for (const key of order) {
+    const name = trials[key].section;
+    sectionOf[key] = name;
+    (bySection[name] = bySection[name] || []).push(key);
+  }
+  el.innerHTML = Object.entries(bySection).map(([name, keys]) => {
+    const t = tally(keys);
+    return `<div class="score">${name}：A ${t.a} · B ${t.b} · 听不出 ${t.tie}（共 ${t.n}）</div>`;
+  }).join('') + '<p class="muted">偏好题没有正确答案，这里只统计分布；换成方法名见下方「揭晓」。</p>';
+
+  const rows = Object.entries(trials).map(([key, info]) => {
+    const value = answers[key];
+    const pick = value ? value.choice_label : '-';
+    let picked = '-';
+    if (pick === 'A') picked = info.a_label;
+    else if (pick === 'B') picked = info.b_label;
+    else if (pick === '?') picked = '听不出';
+    return `<tr><td>${key.toUpperCase()}</td><td>${info.name}</td><td>A: ${info.a_label}</td><td>B: ${info.b_label}</td><td>${picked}</td></tr>`;
+  }).join('');
+  document.getElementById('reveal-table').innerHTML =
+    '<tr><th>题号</th><th>曲目</th><th>A</th><th>B</th><th>你的选择</th></tr>' + rows;
+  document.getElementById('reveal').classList.remove('hidden');
+}
+
+function exportJson() {
+  const rows = Object.entries(trials).map(([key, info]) => {
+    const value = answers[key] || {};
+    let picked = null;
+    if (value.choice === 'a') picked = info.a_label;
+    else if (value.choice === 'b') picked = info.b_label;
+    else if (value.choice === '?') picked = '听不出';
+    return {
+      trial: key, piece: info.name, section: info.section,
+      choice: value.choice || null, picked_label: picked,
+      a_label: info.a_label, b_label: info.b_label,
+      a_side: info.a_side, b_side: info.b_side,
+      answered_at: value.at || null,
+    };
+  });
+  const listener = (document.getElementById('listener').value || '').trim();
+  const blob = new Blob([JSON.stringify({page: PAGE, build: BUILD, listener: listener, exported_at: new Date().toISOString(), trials: rows}, null, 2)],
+                                             {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'ab_results' + (listener ? '_' + listener : '') + '.json';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+  document.getElementById('saved').textContent = '已导出 ab_results.json';
+}
+
+load();
+</script></body></html>
