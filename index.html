@@ -39,7 +39,7 @@
 <body><div class="wrap">
   <h1>续写偏好测试</h1>
   <p class="muted">请戴耳机，依次听每题 A、B，再选更自然的一段或「听不出」。共 12 题，建议预留 8–12 分钟。
-  手机请用 Safari、Edge 或 Chrome 打开。作答只保存在当前浏览器，答完请用页底按钮把结果发回组织者；本页不会自动上传答案。</p>
+  手机请用 Safari、Edge 或 Chrome 打开。作答会暂存在当前浏览器，答完点页底“提交结果”即可发送给组织者，无需分享文件。提交内容包括听者代号、逐题选择和作答时间，请使用代号而非真实姓名。</p>
   <p class="muted">听者代号（可选，会写进导出的结果里）：
   <input id="listener" placeholder="例如：同学A" style="border:1px solid var(--line);border-radius:6px;padding:4px 8px;font-size:13px;">
   <span class="muted">构建 5971fd4f23</span></p>
@@ -235,11 +235,15 @@
     </div>
   </div>
   <div class="card">
+    <button id="submit-results" disabled style="background:#2f6fb3;color:white;min-height:48px;">提交结果</button>
+    <p id="submit-status" class="muted" role="status" aria-live="polite">正在连接提交服务…</p>
+    <details><summary>网络失败时的备用方式</summary>
     <button onclick="exportJson()">导出逐题结果 JSON</button>
     <button onclick="shareResults()">分享结果（手机）</button>
     <button onclick="copyResults()">复制结果</button>
     <span class="muted" id="saved"></span>
     <textarea id="result-text" hidden readonly aria-label="结果文本，可全选复制" style="width:100%;height:180px;margin-top:12px;"></textarea>
+    </details>
   </div>
 </div>
 <script>
@@ -408,4 +412,4 @@ document.querySelectorAll('audio').forEach(player => {
   });
 });
 load();
-</script></body></html>
+</script><script src="submission.js" defer></script></body></html>
