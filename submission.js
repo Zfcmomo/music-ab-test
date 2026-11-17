@@ -22,12 +22,13 @@
     if (!transport) return '';
     return transport.mode === 'obs' ? 'obs:' + transport.bucket_url : 'api:' + transport.endpoint;
   }
+  const legacyTarget = 'api:https://music-listening-results.music-listening-results.workers.dev/api/submit';
   function safeName(value) {
     return (value || 'anon').replace(/[^0-9A-Za-z\u4e00-\u9fa5_-]/g, '_').slice(0, 32) || 'anon';
   }
   function refresh() {
     // 换后端（比如从 Cloudflare 换到 OBS）后，旧的「已提交」不能挡住补交
-    if (saved?.status === 'submitted' && transport && saved.target && saved.target !== transportId()) {
+    if (saved?.status === 'submitted' && transport && (saved.target || legacyTarget) !== transportId()) {
       saved.status = 'pending';
       delete saved.receipt;
       remember();
